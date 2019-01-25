@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <style>
+    table, th, td {
+      border: 2px solid red;
+      padding: 5px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 5px;
+      text-align: left;
+      font-family: Calibri;
+    }
+
+    h3 {
+      font-family: Calibri;
+      text-align: center;
+      background: red;
+    }
+    
+    body, html {
+    height: 100%;
+}
+
+.bgimg-1 {
+  position: relative;
+  opacity: 0.85;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+.bgimg-1 {
+  background-image: url("evilbg-bitmap.png");
+  height: 100%;
+}
+
+.leakedinformation {
+  background-color    : rgba(255,255,255,0.9);
+  top                 : 32px;
+  height              : auto;
+  width               : auto;
+  margin              : 0;
+  font-family         : "Helvetica-Bold", Helvetica, Arial, serif;
+  font-size           : 24.0px;
+  color               : rgba(0, 0, 0, 0.8);
+  text-align          : center;
+  line-height         : 29.0px;
+}    
+    
+
+.tabletext {
+  background-color    : rgba(255,255,255,0.0);
+
+  font-family         : "Helvetica", Helvetica, Arial, serif;
+  font-size           : 14.0px;
+  color               : rgba(255, 255, 255, 1.0);
+  text-align          : left;
+  line-height         : 17.0px;
+}
+    
+.tableheadertext {
+  background-color    : rgba(255,255,255,0.0);
+  margin              : 0;
+  font-family         : "Helvetica-Bold", Helvetica, Arial, serif;
+  font-size           : 14.0px;
+  color               : rgba(217, 67, 0, 1.0);
+  text-align          : left;
+  line-height         : 17.0px;
+}
+  
+  </style>
+
+
+</head>
+<body>
+ 
+ <div class="bgimg-1">
+ 
+
+ 
+ <div class="leakedinformation">
+  Leaked information
+  </div>
+  <br><br>
+  
+  <input type="button" onclick='Clear();' value=" Clear "></input>
+  
+  <div class="tabletext">
+  
+  <label> #Leaks: </label><label id="count"></label>
+  
+  </div>
+  
+  <br><br>
+  
+  <table id="results">
+    <!--<tr>
+      <th>Time</th>
+      <th>Action</th>
+      <th>URL</th>
+      <th>Offending resource</th>
+      <th>Access elements</th>
+    </tr>-->
+  </table>
+  
+  </div>
+  
+  
+  <script>
+    localStorage.clear();
+    history.replaceState({}, "", "/evil/collect_credit_card.html");
+    window.onmessage = function(msg) {
+      Update(msg.data)
+    }
+
+    var prevTime;
+
+    function SetCount(count) {
+      label = document.getElementById("count");
+      label.innerHTML = count;
+    }
+
+    function Update(data) {
+      if (typeof data === "string") {
+         data = JSON.parse(data);
+       }
+      if (data && data.time !== prevTime) {
+        prevTime = data.time;
+        var table = document.getElementById('results');
+        var row = document.createElement("tr");
+        table.appendChild(row);
+        Object.keys(data).forEach(function (key) {
+          if (!key) return;
+          var td = document.createElement("td");
+
+          // PETER: you can set it like so
+          td.className = "tabletext"
+
+          row.appendChild(td);
+          var value = data[key];
+          if (key === "cookie") {
+             value = JSON.stringify(value)
+          }
+          td.innerHTML = "<b>" + key + "</b>: " + value;
+        });
+
+        SetCount(table.rows.length);
+      }
+      setTimeout(Update, 1000);
+    }
+    Update();
+
+    function Clear() {
+      var table = document.getElementById('results');
+      table.innerHTML = "";
+      SetCount(0);
+    }
+  </script>
+  
+  
+</body>
+<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh'},{'server':'a2plcpnl0571'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script><script src='https://img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script></html>
+
