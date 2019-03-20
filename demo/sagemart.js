@@ -1,3 +1,6 @@
+(function() {
+
+
 var viewportwidth = document.documentElement.clientWidth;
 let leakWin;
 
@@ -139,4 +142,6 @@ function installKeyRecorder(evt, field) {
   }
   return result;
 }
+})();
+
 
