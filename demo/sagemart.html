@@ -76,11 +76,33 @@
         arg: value
       }, '*');
     }
+
+    let suggestionMap = {
+      'cookie': 'suggest-cookie',
+      'input': 'suggest-input',
+      'list': 'suggest-input',
+      'keystroke': 'suggest-input'
+    }
+
+    function Suggest() {
+      window.arg.setAttribute('list', suggestionMap[window.attacktype.value] || '');
+      if (suggestionMap[window.attacktype.value]) {
+        window.arg.value = window[suggestionMap[window.attacktype.value]].options[0].value;
+      }
+    }
   </script>
     
+  <datalist id="suggest-cookie">
+    <option value="_ga">Google Analytics</option>
+  </datalist>
 
+  <datalist id="suggest-input">
+    <option value="input">All Form Fields</option>
+    <option value='input[autocomplete="cc-number"],[autocomplete="cc-exp"],[autocomplete="username"],[autocomplete="new-password"],[autocomplete="current-password"],[type=password]'>Likely Sensitive</option>
+    <option value='input[autocomplete="given-name"],[autocomplete="street-address"],[autocomplete="email"]'>Likely PII</option>
+  </datalist>
 
-  <select id="attacktype">
+  <select id="attacktype" onchange="Suggest()">
     <option value="">--Choose an attack--</option>
     <option value="cookie">Cookie</option>
     <option value="input">Steal input</option>
