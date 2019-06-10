@@ -88,7 +88,7 @@ function getForms(field, value) {
   }
   var el = document.querySelectorAll(`[${field}=${value}]`);
   if (el) {
-    return Array.prototype.slice.call(el).map(x => x.value);
+    return Array.prototype.slice.call(el).map(x => 'value' in x ? x.value : x.innerText);
   }
   return "";
 }
